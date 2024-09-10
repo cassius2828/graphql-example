@@ -6,23 +6,23 @@ const { makeExecutableSchema } = require("@graphql-tools/schema");
 const { loadFilesSync } = require("@graphql-tools/load-files");
 
 const path = require("path");
-const typesArray = loadFilesSync('**/*', {
-    extensions: ['graphql'],
-  });
-const schema = makeExecutableSchema({
-  typeDefs: typesArray,
+const typesArray = loadFilesSync("**/*", {
+  extensions: ["graphql"],
+});
+const resolversArray = loadFilesSync("**/*", {
+  extensions: ["resolvers.js"],
 });
 
-const root = {
-  products: require("./products/products.model"),
-  orders: require("./orders/orders.model"),
-};
+// all data is coming through our executable schema, no need for default root values
+const schema = makeExecutableSchema({
+  typeDefs: typesArray,
+  resolvers: resolversArray,
+});
 
 app.use(
   "/graphql",
   graphqlHTTP({
     schema,
-    rootValue: root,
     graphiql: true,
   })
 );
