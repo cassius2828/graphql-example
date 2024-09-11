@@ -5,7 +5,7 @@ const { graphqlHTTP } = require("express-graphql");
 const { makeExecutableSchema } = require("@graphql-tools/schema");
 const { loadFilesSync } = require("@graphql-tools/load-files");
 
-const path = require("path");
+
 const typesArray = loadFilesSync("**/*", {
   extensions: ["graphql"],
 });
